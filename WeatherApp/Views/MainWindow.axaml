@@ -1,0 +1,149 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="WeatherApp.Views.MainWindow"
+        Title="Weather App"
+        Width="1000" Height="650"
+        MinWidth="900" MinHeight="600"
+        WindowStartupLocation="CenterScreen"
+        Background="#F0F4FA">
+
+    <TabControl>
+
+        <!-- ==================== ONGLET 1 : RECHERCHE ==================== -->
+        <TabItem Header="🔍  Recherche">
+            <DockPanel>
+                <!-- Barre de recherche -->
+                <StackPanel DockPanel.Dock="Top" Margin="16,12,16,4" Spacing="4">
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <TextBox x:Name="TxtSearchCity"
+                                 Watermark="Nom de la ville…"
+                                 Width="280" Height="32"
+                                 KeyDown="TxtSearchCity_KeyDown"/>
+                        <Button x:Name="BtnSearch"
+                                Content="Rechercher"
+                                Height="32"
+                                Click="BtnSearch_Click"/>
+                    </StackPanel>
+                    <TextBlock x:Name="LblSearchStatus"
+                               FontSize="12"
+                               Foreground="Firebrick"/>
+                </StackPanel>
+
+                <!-- Résultat de la recherche -->
+                <ScrollViewer>
+                    <StackPanel x:Name="PnlSearchResult"
+                                Margin="24,8,24,16"
+                                IsVisible="False">
+                        <Border Background="White"
+                                CornerRadius="8"
+                                Padding="20"
+                                MaxWidth="540"
+                                HorizontalAlignment="Left">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <StackPanel Grid.Column="0" Spacing="8">
+                                    <TextBlock x:Name="LblCityName"
+                                               FontSize="18" FontWeight="Bold"
+                                               Foreground="#1E3250"/>
+                                    <TextBlock x:Name="LblLatLon"
+                                               Foreground="#1E3250"/>
+                                    <TextBlock x:Name="LblTemp"
+                                               FontSize="26" FontWeight="Bold"/>
+                                    <TextBlock x:Name="LblDesc"
+                                               FontSize="13"
+                                               Foreground="#1E3250"/>
+                                    <TextBlock x:Name="LblHumidity"
+                                               FontSize="13"
+                                               Foreground="#1E3250"/>
+                                </StackPanel>
+                                <Image x:Name="ImgWeatherIcon"
+                                       Grid.Column="1"
+                                       Width="80" Height="80"
+                                       Stretch="Uniform"
+                                       Margin="20,0,0,0"
+                                       VerticalAlignment="Top"/>
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+            </DockPanel>
+        </TabItem>
+
+        <!-- ==================== ONGLET 2 : PRÉVISIONS ==================== -->
+        <TabItem Header="📅  Prévisions">
+            <DockPanel>
+                <!-- Barre de recherche prévisions -->
+                <StackPanel DockPanel.Dock="Top" Margin="16,12,16,4" Spacing="4">
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <TextBox x:Name="TxtForecastCity"
+                                 Watermark="Nom de la ville…"
+                                 Width="280" Height="32"
+                                 KeyDown="TxtForecastCity_KeyDown"/>
+                        <Button x:Name="BtnForecast"
+                                Content="Voir les prévisions"
+                                Height="32"
+                                Click="BtnForecast_Click"/>
+                    </StackPanel>
+                    <TextBlock x:Name="LblForecastStatus"
+                               FontSize="12"
+                               Foreground="Firebrick"/>
+                </StackPanel>
+
+                <!-- Colonnes de prévision (scroll horizontal) -->
+                <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                              VerticalScrollBarVisibility="Disabled">
+                    <StackPanel x:Name="PnlForecastColumns"
+                                Orientation="Horizontal"
+                                Margin="16,8,16,16"
+                                Spacing="12"/>
+                </ScrollViewer>
+            </DockPanel>
+        </TabItem>
+
+        <!-- ==================== ONGLET 3 : PARAMÈTRES ==================== -->
+        <TabItem Header="⚙  Paramètres">
+            <ScrollViewer>
+                <Border Background="White"
+                        CornerRadius="8"
+                        Padding="24"
+                        MaxWidth="520"
+                        HorizontalAlignment="Left"
+                        Margin="20">
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="Paramètres de l'application"
+                                   FontSize="16" FontWeight="Bold"
+                                   Foreground="#1E3C6E"
+                                   Margin="0,0,0,8"/>
+
+                        <TextBlock Text="Ville par défaut :"
+                                   FontWeight="SemiBold"
+                                   Foreground="#3C5064"
+                                   Margin="0,8,0,0"/>
+                        <TextBox x:Name="TxtDefaultCity"
+                                 Width="440" Height="32"
+                                 HorizontalAlignment="Left"/>
+
+                        <TextBlock Text="Langue des descriptions météo :"
+                                   FontWeight="SemiBold"
+                                   Foreground="#3C5064"
+                                   Margin="0,8,0,0"/>
+                        <ComboBox x:Name="CboLanguage"
+                                  Width="320" Height="32"
+                                  HorizontalAlignment="Left"/>
+
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="0,16,0,0"
+                                    Spacing="16">
+                            <Button x:Name="BtnSaveSettings"
+                                    Content="💾  Enregistrer"
+                                    Click="BtnSaveSettings_Click"/>
+                            <TextBlock x:Name="LblSettingsSaved"
+                                       Foreground="SeaGreen"
+                                       VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </ScrollViewer>
+        </TabItem>
+
+    </TabControl>
+</Window>

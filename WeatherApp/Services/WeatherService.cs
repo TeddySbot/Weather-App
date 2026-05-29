@@ -6,7 +6,7 @@ namespace WeatherApp.Services
     public class WeatherService
     {
         private readonly HttpClient _httpClient;
-        private const string BaseUrl = "https://api.openweathermap.org/data/2.5";
+        private const string BaseUrl     = "https://api.openweathermap.org/data/2.5";
         private const string IconBaseUrl = "https://openweathermap.org/img/wn";
 
         public WeatherService()
@@ -26,7 +26,7 @@ namespace WeatherApp.Services
             response.EnsureSuccessStatusCode();
 
             var json = await response.Content.ReadAsStringAsync();
-            var obj = JObject.Parse(json);
+            var obj  = JObject.Parse(json);
 
             return new WeatherData
             {
@@ -52,21 +52,21 @@ namespace WeatherApp.Services
             response.EnsureSuccessStatusCode();
 
             var json = await response.Content.ReadAsStringAsync();
-            var obj = JObject.Parse(json);
+            var obj  = JObject.Parse(json);
 
             var cityName = obj["city"]!["name"]!.ToString();
-            var lat = obj["city"]!["coord"]!["lat"]!.Value<double>();
-            var lon = obj["city"]!["coord"]!["lon"]!.Value<double>();
+            var lat      = obj["city"]!["coord"]!["lat"]!.Value<double>();
+            var lon      = obj["city"]!["coord"]!["lon"]!.Value<double>();
 
-            // Get forecasts at 12:00 for the next 5 days
-            var forecasts = new List<WeatherData>();
-            var today = DateTime.Today;
+            // Prévisions à 12:00 pour les 5 prochains jours
+            var forecasts  = new List<WeatherData>();
+            var today      = DateTime.Today;
             var targetDays = Enumerable.Range(1, 5).Select(i => today.AddDays(i)).ToList();
 
             foreach (var item in obj["list"]!.Children())
             {
                 var dtTxt = item["dt_txt"]!.ToString();
-                var dt = DateTime.Parse(dtTxt);
+                var dt    = DateTime.Parse(dtTxt);
 
                 if (dt.Hour == 12 && targetDays.Any(d => d.Date == dt.Date))
                 {
@@ -93,12 +93,11 @@ namespace WeatherApp.Services
             };
         }
 
-        public async Task<Image> GetWeatherIconAsync(string iconCode)
+        /// <summary>Retourne les octets bruts de l'icône météo (format PNG).</summary>
+        public async Task<byte[]> GetWeatherIconAsync(string iconCode)
         {
             var url = $"{IconBaseUrl}/{iconCode}@2x.png";
-            var bytes = await _httpClient.GetByteArrayAsync(url);
-            using var ms = new MemoryStream(bytes);
-            return Image.FromStream(ms);
+            return await _httpClient.GetByteArrayAsync(url);
         }
 
         private static string CapitalizeFirst(string s)

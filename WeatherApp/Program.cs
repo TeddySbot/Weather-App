@@ -1,14 +1,16 @@
-using WeatherApp.Forms;
+using Avalonia;
 
-namespace WeatherApp
+namespace WeatherApp;
+
+internal class Program
 {
-    internal static class Program
-    {
-        [STAThread]
-        static void Main()
-        {
-            ApplicationConfiguration.Initialize();
-            Application.Run(new MainForm());
-        }
-    }
+    [STAThread]
+    public static void Main(string[] args) => BuildAvaloniaApp()
+        .StartWithClassicDesktopLifetime(args);
+
+    public static AppBuilder BuildAvaloniaApp()
+        => AppBuilder.Configure<App>()
+            .UsePlatformDetect()
+            .WithInterFont()
+            .LogToTrace();
 }
