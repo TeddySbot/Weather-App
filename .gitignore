@@ -74,6 +74,3 @@ node_modules/
 **/.localhistory/
 .vshistory/
 
-# ⚠ Application settings – DO NOT COMMIT
-options.json
-**/options.json
